@@ -1,4 +1,6 @@
 import express from "express";
+import dotenv from "dotenv";
+dotenv.config();
 
 // Import the ApolloServer class
 import { ApolloServer } from "@apollo/server";
@@ -22,7 +24,12 @@ const startApolloServer = async () => {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
-  app.use("/graphql", expressMiddleware(server));
+  app.use(
+    "/graphql",
+    expressMiddleware(server, {
+      context: async ({ req }) => ({ req }),
+    })
+  );
 
   app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}!`);
