@@ -7,6 +7,11 @@ const resolvers = {
         name: "John Doe",
         email: "john@example.com",
       },
+      {
+        id: "2",
+        name: "Jen Doe",
+        email: "jen@example.com",
+      },
     ],
   },
 };
