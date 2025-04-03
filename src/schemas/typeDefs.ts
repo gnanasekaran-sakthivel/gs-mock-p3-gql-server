@@ -17,6 +17,7 @@ export const typeDefs = gql`
   type Query {
     getUser(id: Int!): Response
     getAllUsers: [User!]!
+    hello: String!
   }
 
   type Mutation {

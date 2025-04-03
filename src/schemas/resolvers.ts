@@ -23,6 +23,8 @@ export const resolvers = {
     getAllUsers: async () => {
       return users;
     },
+
+    hello: () => "Hello from Apollo Server + GraphQL!",
   },
 
   Mutation: {
