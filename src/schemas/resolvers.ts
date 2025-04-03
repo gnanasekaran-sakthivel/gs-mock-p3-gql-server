@@ -24,7 +24,7 @@ export const resolvers = {
       return users;
     },
 
-    hello: () => "Hello from Apollo Server + GraphQL!",
+    hello: () => "Hello from Mock GraphQL Server for our Project#3...",
   },
 
   Mutation: {
