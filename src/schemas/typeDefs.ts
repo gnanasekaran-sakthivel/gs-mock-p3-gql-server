@@ -1,15 +1,32 @@
-const typeDefs = `
-  # Define which fields are accessible from the Class model
+import { gql } from "apollo-server-express";
+
+export const typeDefs = gql`
   type User {
-    id: ID!
-    name: String
-    email: String
+    id: Int!
+    name: String!
+    email: String!
+    password: String!
   }
 
-  # Define which queries the front end is allowed to make and what data is returned
+  type Response {
+    success: Boolean!
+    message: String!
+    user: User
+  }
+
   type Query {
-    users: [User]
+    getUser(id: Int!): Response
+  }
+
+  type Mutation {
+    registerUser(name: String!, email: String!, password: String!): Response
+    updateUser(
+      id: Int!
+      name: String
+      email: String
+      password: String
+    ): Response
+    deleteUser(id: Int!): Response
+    login(email: String!, password: String!): Response
   }
 `;
-
-export default typeDefs;

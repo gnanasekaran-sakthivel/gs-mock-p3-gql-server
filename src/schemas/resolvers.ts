@@ -1,19 +1,74 @@
-// Create the functions that fulfill the queries defined in `typeDefs.ts`
-const resolvers = {
+import {
+  User,
+  Response,
+  GetUserInput,
+  RegisterUserInput,
+  UpdateUserInput,
+  DeleteUserInput,
+  LoginInput,
+} from "../types/types";
+
+const users: User[] = []; // Temporary in-memory storage
+
+export const resolvers = {
   Query: {
-    users: async () => [
-      {
-        id: "1",
-        name: "John Doe",
-        email: "john@example.com",
-      },
-      {
-        id: "2",
-        name: "Jen Doe",
-        email: "jen@example.com",
-      },
-    ],
+    getUser: (_: any, { id }: GetUserInput): Response => {
+      const user = users.find((u) => u.id === id);
+      return user
+        ? { success: true, message: "User found", user }
+        : { success: false, message: "User not found", user: null };
+    },
+  },
+  Mutation: {
+    registerUser: (
+      _: any,
+      { name, email, password }: RegisterUserInput
+    ): Response => {
+      const id = users.length + 1;
+      const newUser: User = { id, name, email, password };
+      users.push(newUser);
+      return {
+        success: true,
+        message: "User registered successfully",
+        user: newUser,
+      };
+    },
+
+    updateUser: (
+      _: any,
+      { id, name, email, password }: UpdateUserInput
+    ): Response => {
+      const user = users.find((u) => u.id === id);
+      if (!user)
+        return { success: false, message: "User not found", user: null };
+
+      if (name) user.name = name;
+      if (email) user.email = email;
+      if (password) user.password = password;
+
+      return { success: true, message: "User updated successfully", user };
+    },
+
+    deleteUser: (_: any, { id }: DeleteUserInput): Response => {
+      const index = users.findIndex((u) => u.id === id);
+      if (index === -1)
+        return { success: false, message: "User not found", user: null };
+
+      const deletedUser = users.splice(index, 1)[0];
+      return {
+        success: true,
+        message: "User deleted successfully",
+        user: deletedUser,
+      };
+    },
+
+    login: (_: any, { email, password }: LoginInput): Response => {
+      const user = users.find(
+        (u) => u.email === email && u.password === password
+      );
+      return user
+        ? { success: true, message: "Login successful", user }
+        : { success: false, message: "Invalid email or password", user: null };
+    },
   },
 };
-
-export default resolvers;
