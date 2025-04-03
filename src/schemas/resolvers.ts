@@ -18,7 +18,13 @@ export const resolvers = {
         ? { success: true, message: "User found", user }
         : { success: false, message: "User not found", user: null };
     },
+
+    // New query for getting all users
+    getAllUsers: async () => {
+      return users;
+    },
   },
+
   Mutation: {
     registerUser: (
       _: any,
