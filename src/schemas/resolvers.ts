@@ -20,7 +20,7 @@ export const resolvers = {
     },
 
     // New query for getting all users
-    getAllUsers: async () => {
+    allUsers: async () => {
       return users;
     },
 

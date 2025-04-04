@@ -16,7 +16,7 @@ export const typeDefs = gql`
 
   type Query {
     getUser(id: Int!): Response
-    getAllUsers: [User!]!
+    allUsers: [User!]!
     hello: String!
   }
 
